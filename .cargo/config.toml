@@ -1,0 +1,30 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+rustflags = [
+  "-C",
+  "link-arg=--nmagic",
+  "-C",
+  "link-arg=-Tlink.x",
+  "-C",
+  "link-arg=-Tmemory.x",
+
+  # Code-size optimizations.
+  # This requires nightly atm.
+  # "-Z",
+  # "trap-unreachable=no",
+  # "-C",
+  # "inline-threshold=5",
+  # "-C",
+  # "no-vectorize-loops",
+  # "-C",
+  # "force-frame-pointers=no",
+
+  # We don't know where the flash loader will be
+  # placed in memory, so we need to create
+  # position independent code (pic).
+  "-C",
+  "relocation-model=pic",
+]
+runner = "target-gen test template.yaml target/definition.yaml"
+
+[build]
+target = "thumbv7em-none-eabihf"

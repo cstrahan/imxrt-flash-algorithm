@@ -1,0 +1,50 @@
+[package]
+authors = ["Charles Strahan <charles@cstrahan.com>"]
+edition = "2021"
+readme = "README.md"
+name = "imxrt-flash-algorithm"
+version = "0.1.0"
+
+[dependencies]
+cortex-m = "0.7.2"
+flash-algorithm = { git = "https://github.com/probe-rs/flash-algorithm.git", rev = "8af3d68310d1c7d81db467135e62411332b55214" }
+imxrt-ral = { version = "0.5.3", features = ["imxrt1062"] }
+rtt-target = { version = "0.3", features = ["cortex-m"] }
+
+# this lets you use `cargo fix`!
+[[bin]]
+name = "imxrt-flash-algorithm"
+test = false
+bench = false
+
+[profile.dev]
+codegen-units = 1
+debug = 2
+debug-assertions = true
+incremental = false
+opt-level = 3
+overflow-checks = true
+
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = 's'
+overflow-checks = false
+
+# do not optimize proc-macro crates = faster builds from scratch
+[profile.dev.build-override]
+codegen-units = 8
+debug = false
+debug-assertions = false
+opt-level = 0
+overflow-checks = false
+
+[profile.release.build-override]
+codegen-units = 8
+debug = false
+debug-assertions = false
+opt-level = 0
+overflow-checks = false
