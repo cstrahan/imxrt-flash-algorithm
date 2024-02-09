@@ -6,10 +6,19 @@ name = "imxrt-flash-algorithm"
 version = "0.1.0"
 
 [dependencies]
-cortex-m = "0.7.2"
+cortex-m = { version = "0.7.2" }
 flash-algorithm = { git = "https://github.com/probe-rs/flash-algorithm.git", rev = "8af3d68310d1c7d81db467135e62411332b55214" }
 imxrt-ral = { version = "0.5.3", features = ["imxrt1062"] }
-rtt-target = { version = "0.3", features = ["cortex-m"] }
+imxrt-hal = { version = "0.5.4", features = ["imxrt1060"], optional = true }
+miniz_oxide = { version = "0.7.2", default-features = false, optional = true }
+nb = "1.1.0"
+ufmt = "0.2.0"
+ufmt-write = "0.1.0"
+
+[features]
+log = ["imxrt-hal"]
+miniz = ["miniz_oxide"]
+default = ["miniz"]
 
 # this lets you use `cargo fix`!
 [[bin]]

@@ -8,7 +8,7 @@ STACK_SIZE=2048
 
 cargo build --release && \
   target-gen elf -u "$ELF" "$YAML" && \
-  # add stack_size after instructions
-  perl -pi -e '/instructions:/ and $_.="  stack_size: '$STACK_SIZE'\n"' MIMXRT1060.yaml
-    
+  # add stack_size and transfer_encoding after instructions
+  perl -pi -e '/instructions:/ and $_.="  stack_size: '$STACK_SIZE'\n  transfer_encoding: miniz\n"' MIMXRT1060.yaml
+
 #sed -e 's/algorithm-test # \(.*\)$/\1/' template.yaml > "$out_yaml"
